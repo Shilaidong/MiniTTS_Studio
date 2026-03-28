@@ -275,8 +275,8 @@
             <!-- TTS Tab -->
             <div id="tts-tab">
                 <div class="form-group">
-                    <label>API Key</label>
-                    <input type="password" id="apiKey" placeholder="输入你的 API Key">
+                    <label>API Key (Token Plan)</label>
+                    <input type="password" id="apiKey" placeholder="输入你的 API Key" value="">
                 </div>
 
                 <div class="form-group">
@@ -409,7 +409,21 @@
         const UPLOAD_URL = 'https://api.minimaxi.com/v1/files/upload';
         const CLONE_URL = 'https://api.minimaxi.com/v1/voice_clone';
 
+        // API Keys from Vercel Environment Variables
+        const TTS_API_KEY = import.meta.env.VITE_TTS_API_KEY || '';
+        const CLONE_API_KEY = import.meta.env.VITE_CLONE_API_KEY || '';
+
         let currentAudio = null;
+
+        // Pre-fill API keys from environment variables
+        document.addEventListener('DOMContentLoaded', () => {
+            if (TTS_API_KEY) {
+                document.getElementById('apiKey').value = TTS_API_KEY;
+            }
+            if (CLONE_API_KEY) {
+                document.getElementById('cloneApiKey').value = CLONE_API_KEY;
+            }
+        });
 
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
